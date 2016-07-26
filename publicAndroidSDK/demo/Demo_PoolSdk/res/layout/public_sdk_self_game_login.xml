@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@drawable/public_sdk_self_sdk_login_bg"
+    android:layout_height="match_parent" >
+
+    <Button
+        android:id="@+id/ya_login_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="28dp"
+        android:layout_marginTop="21dp"
+        android:background="@drawable/public_sdk_self_ya_login_bt_selector"
+        android:onClick="yaOnClick" />
+
+    <Button
+        android:id="@+id/ya_enter_game_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/ya_login_bt"
+        android:layout_below="@+id/ya_login_bt"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/public_sdk_self_ya_login_bt_selector"
+        android:onClick="yaOnClick"/>
+
+</RelativeLayout>
