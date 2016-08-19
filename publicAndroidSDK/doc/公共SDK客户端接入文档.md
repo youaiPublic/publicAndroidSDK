@@ -2,7 +2,7 @@
 ###1、开发环境搭建
     以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置
     1.1、将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的 libs 目录下
-    ![Alt text](../image/image1.png)
+    ![Alt text](https://github.com/youaiPublic/publicAndroidSDK/tree/master/publicAndroidSDK/image/image1.png)
     1.2、将1.1中复制的jar包引用到游戏工程<br>
     1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中poolsdk_splash目录		           下，将assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值回调地址（注：此回调地址为测试使用，正式	             环境以SDK后台配置的地址为准）
     1.4、修改游戏工程的AndroidManifest.xml（可以参照复制Demo中AndroidManifest.xml文件）
@@ -363,10 +363,10 @@
     	
 #3、自测用例
     3.1、进入游戏会弹出下面的登录界面,表示登录接口接入正常;
-    	![Alt text](../image/image5.png)
+    	![Alt text](https://github.com/youaiPublic/publicAndroidSDK/tree/master/publicAndroidSDK/image/image5.png)
     3.2、点击充值会弹出下面的界面,表示充值接口接入正常;
-	![Alt text](../image/image6.png)
+	![Alt text](https://github.com/youaiPublic/publicAndroidSDK/tree/master/publicAndroidSDK/image/image6.png)
     3.3、点击渠道用户中心,弹出下面的界面表示该接口接入正常;
-    	![Alt text](../image/image7.png)
+    	![Alt text](https://github.com/youaiPublic/publicAndroidSDK/tree/master/publicAndroidSDK/image/image7.png)
 #4、母包
     4.1、接入公共 SDK 编译生成的 apk 即为打包工具使用的母包
