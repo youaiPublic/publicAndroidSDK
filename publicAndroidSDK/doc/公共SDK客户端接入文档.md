@@ -82,17 +82,17 @@
 ###2、功能接口
     (注意:以下所有接口都必须在 SDK 初始化完成之后才能调用)<br>
     2.1、继承 PoolSDKApplication(必接) <br>
-    说明:<br>
-    游戏工程如果没有Application,请在 AndroidManifest.xml 中添加SDK的Application,如下所示:<br>
-    <application android:name="com.gzyouai.publicsdk.application.PoolSDKApplication"><br>
-    游戏工程如果有 Application,请继承 SDK 中 PoolSDKApplication:
-    public class XXXXApplication extends PoolSDKApplication { 
-        @Override
-        public void onCreate() {
-            // TODO Auto-generated method stub
-            super.onCreate();
-        } 
-    }
+        说明:<br>
+        游戏工程如果没有Application,请在 AndroidManifest.xml 中添加SDK的Application,如下所示:<br>
+        <application android:name="com.gzyouai.publicsdk.application.PoolSDKApplication"><br>
+        游戏工程如果有 Application,请继承 SDK 中 PoolSDKApplication:
+        public class XXXXApplication extends PoolSDKApplication { 
+            @Override
+            public void onCreate() {
+                // TODO Auto-generated method stub
+                super.onCreate();
+            } 
+        }
     2.2、初始化接口(必接)
         接口说明:
         首先在程序开始的地方调用 SDK 的初始化 init 方法,并设 置 Activity 对像和初始化完成回调监听(在初始化失败情况下不 再调用其它 SDK 接口方法)
@@ -100,3 +100,123 @@
         2.2.1、方法定义
             public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
+        2.2.3、代码示例:
+        PoolSdkHelper.init(this, new PoolSDKCallBackListener() {
+			@Override
+			public void poolSdkCallBack(int code, String msg) {
+				// TODO Auto-generated method stub
+				switch (code) {
+				case PoolSDKCode.POOLSDK_INIT_SUCCESS://初始化成功
+					PoolSdkLog.logInfo("游戏中POOLSDK_INIT_SUCCESS");
+					login();
+					break;
+				case PoolSDKCode.POOLSDK_INIT_FAIL:
+					break;
+				default:
+					break;
+				}
+			}
+		});
+	
+	2.3、登录接口(必接)
+	    接口说明:游戏登录时调用
+	    2.3.1、方法定义
+	    public static void login(final String paramCustom,final PoolLoginListener poolLoginListener)
+	    2.3.2、参数说明
+	    2.3.3、代码示例
+    		PoolSdkHelper.login("登录自定义字段", new PoolLoginListener() {
+    			@Override
+    			public void onLoginSuccess(PoolLoginInfo poolLoginInfo) {
+    				String userType = poolLoginInfo.getUserType();
+    				String timestamp = poolLoginInfo.getTimestamp();
+    				String serverSign = poolLoginInfo.getServerSign();
+    				String openId = poolLoginInfo.getOpenID();
+    				// TODO: 把以上信息发送给游戏服务端做登录校验，需要其他信息请从poolLoginInfo对象中获取
+    				System.out.println("登录成功  userType = " + userType
+    						+ "; timestamp = " + timestamp + "; serverSign = "
+    						+ serverSign + "; openId = " + openId);
+    			}
+    			@Override
+    			public void onLoginFailed(String errorMsg) {
+    				System.out.println("登录失败  = " + errorMsg);
+    			}
+    		});
+    		
+    2.4、提交角色数据接口(必接)
+        接口说明:游戏提交角色数据接口,该接口需要在以下 3 中情况下
+        调用:进入游戏主场景、创建角色、角色升级
+        2.4.1、方法定义
+        public static void submitRoleData(final PoolRoleInfo poolRoleInfo,
+			final PoolRoleListener poolRoleListener)
+		2.4.2、参数说明
+		2.4.3、代码示例
+		/********************************************
+		 * 以下所有字段都是必填项
+		 */
+		PoolRoleInfo poolRoleInfo = new PoolRoleInfo();
+		poolRoleInfo.setRoleID("123456");
+		poolRoleInfo.setRoleLevel("10");
+		poolRoleInfo.setRoleSex("0");
+		poolRoleInfo.setRoleName("我是角色名");
+		poolRoleInfo.setServerID("1");
+		poolRoleInfo.setServerName("我是服务器名");
+		poolRoleInfo.setCustom("角色创建时间");
+		poolRoleInfo.setCallType(PoolRoleInfo.Type_EnterGame);
+		// poolRoleInfo.setCallType(PoolRoleInfo.Type_CreateRole);
+		// poolRoleInfo.setCallType(PoolRoleInfo.Type_RoleUpgrade);
+
+		PoolSdkHelper.submitRoleData(poolRoleInfo, new PoolRoleListener() {
+			@Override
+			public void onRoleDataSuccess(String paramCustom) {
+				System.out.println("提交角色数据成功  = " + paramCustom);
+			}
+		});
+		
+	2.5、支付接口(必接)
+	    2.5.1、方法定义
+	        public static void pay(final PoolPayInfo poolPayInfo,final PoolPayListener poolPayListener)
+	   2.5.2、参数说明
+	   2.5.3、代码示例
+	        /********************************************
+		    * 以下所有字段都是必填项
+		    */
+		    // 设置充值金额，单位“元”
+		    poolPayInfo.setAmount("1");
+		    // 服务器id
+		    poolPayInfo.setServerID("8");
+    		// 服务器名
+    		poolPayInfo.setServerName("我是服务器名");
+    		// 角色id
+    		poolPayInfo.setRoleID("123456");
+    		// 角色名
+    		poolPayInfo.setRoleName("我是角色名");
+    		// 角色等级
+    		poolPayInfo.setRoleLevel("10");
+    		// 商品ID
+    		poolPayInfo.setProductID("1");
+    		// 商品名称
+    		poolPayInfo.setProductName("金币");
+    		// 商品描述
+    		poolPayInfo.setProductDesc("购买金币");
+    		// 兑换比例
+    		poolPayInfo.setExchange("10");
+    		// 自定义参数
+    		poolPayInfo.setCustom("我是自定义参数");
+    		// TODO Auto-generated method stub
+    		PoolSdkHelper.pay(poolPayInfo, new PoolPayListener() {
+    			@Override
+    			public void onPaySuccess(String paramCustom) {
+    				System.out.println("支付成功  = " + paramCustom);
+    			}
+    			@Override
+    			public void onPayFailed(String paramCustom, String errorMsg) {
+    				System.out.println("支付失败  = " + paramCustom + "; errorMsg = "
+    						+ errorMsg);
+    			}
+    		});
+    		
+    2.6、检测 SDK 是否含有用户中心接口(必接)
+        说明:如果接口返回为 true,表示需要游戏方在合适的界面中添 加一个用户中心的按钮,点击按钮时调用文档中 2.7 的用户中心 接口;如果返回 false,则不做处理
+        2.6.1、方法定义
+            public static boolean hasChannelCenter() 
+
