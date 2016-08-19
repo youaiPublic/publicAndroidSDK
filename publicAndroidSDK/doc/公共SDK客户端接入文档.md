@@ -100,12 +100,4 @@
         2.2.1、方法定义
             public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
-        表头
-         | 表头  
-        -------------
-         | ------------- 
-        单元格内容
-         | 单元格内容 
-        单元格内容l
-         | 单元格内容
-        ----------
+        －－－
