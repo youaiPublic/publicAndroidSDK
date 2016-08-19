@@ -1,8 +1,4 @@
 #SDK 接入文档
-First Header | Second Header | Third Header
------------- | ------------- | ------------
-Content Cell | Content Cell  | Content Cell
-Content Cell | Content Cell  | Content Cell
 ###1、开发环境搭建
     以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置
     1.1、将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的 libs 目录下
@@ -14,7 +10,7 @@ Content Cell | Content Cell  | Content Cell
         <uses-permission android:name="android.permission.INTERNET" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
- 	    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+ 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
         <uses-permission android:name="android.permission.INTERNET" />
         <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
         <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -367,10 +363,10 @@ Content Cell | Content Cell  | Content Cell
     	
 #3、自测用例
     3.1、进入游戏会弹出下面的登录界面,表示登录接口接入正常;
-    	![text1][../image/image2.png]
+    	![Alt text](../image/image5.png)
     3.2、点击充值会弹出下面的界面,表示充值接口接入正常;
-	![text2][../image/image3.png]
+	![Alt text](../image/image6.png)
     3.3、点击渠道用户中心,弹出下面的界面表示该接口接入正常;
-    	![text3][../image/image4.png]
+    	![Alt text](../image/image7.png)
 #4、母包
     4.1、接入公共 SDK 编译生成的 apk 即为打包工具使用的母包
