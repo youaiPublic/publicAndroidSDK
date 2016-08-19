@@ -1,11 +1,11 @@
 #SDK 接入文档
 
 ###1、开发环境搭建
-    以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置<br>
-    1.1、将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的 libs 目录下<br>
+    以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置
+    1.1、将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的 libs 目录下
     ![Alt text](../image/image1.png)
     1.2、将1.1中复制的jar包引用到游戏工程<br>
-    1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中poolsdk_splash目录<br>		            下，将assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值回调地址（注：此回调地址为测试使用，正式<br>		           环境以SDK后台配置的地址为准）
+    1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中poolsdk_splash目录		           下，将assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值回调地址（注：此回调地址为测试使用，正式	             环境以SDK后台配置的地址为准）
     1.4、修改游戏工程的AndroidManifest.xml（可以参照复制Demo中AndroidManifest.xml文件）
         ①．添加声明权限：
         <uses-permission android:name="android.permission.INTERNET" />
@@ -216,7 +216,158 @@
     		});
     		
     2.6、检测 SDK 是否含有用户中心接口(必接)
-        说明:如果接口返回为 true,表示需要游戏方在合适的界面中添 加一个用户中心的按钮,点击按钮时调用文档中 2.7 的用户中心 接口;如果返回 false,则不做处理
+        说明:如果接口返回为 true,表示需要游戏方在合适的界面中添加一个用户中心的按钮,点击按钮时调用文档中 2.7 的用户中心接口;如果返回 false,则不做处理
         2.6.1、方法定义
             public static boolean hasChannelCenter() 
+    2.7、用户中心接口(必接)
+    	说明:打开渠道用户中心界面
+    	2.7.1、方法定义
+    	public static void openChannelCenter()
+    	2.7.2、代码示例
+    	/**
+	 * 用户中心
+	 * 
+	 * 游戏方先调用YASDKHelper.hasChannelCenter()获取是否有用户中心，
+	 * 如果有的话，游戏中需要添加按钮，点击按钮调用YASDKHelper.openChannelCenter();
+	 * 如果没有，则不需要显示按钮，也不用调用下面的接口
+	 */
+	private void channelCenter() {
+		PoolSdkHelper.openChannelCenter();
+	}
 
+    2.8、注销登录监听接口
+    	说明:可在游戏启动时设置注销监听事件,渠道注销成功后 SDK 会回调 onLogoutSuccess 方法通知游戏,游戏可在此处理切换账号逻辑
+    	2.8.1、方法定义
+    	public static void setLogoutCallback(final PoolLogoutListener poolLogoutListener)
+    	2.8.2、参数说明
+    	2.8.3、代码示例
+    	    PoolSdkHelper.setLogoutCallback(new PoolLogoutListener() {
+		@Override
+		public void onLogoutSuccess() {
+		    // TODO: 此处处理SDK登出的逻辑
+		    login();
+		    PoolSdkLog.logInfo("游戏中logoutSuccess");
+		}
+	    });	
+    2.9、退出游戏接口(必接)
+    	说明:在游戏需要退出时调用,调用此接口时需先用 PoolSdkHelper.hasExitDialog() 判断 sdk 是否有退出界面,为 true
+    	表示有退出界面需调用 showExitDialog()显示退出界面,为 false 时表示没有退出界面,游戏需自己处理退出逻辑且在确认 
+    	游戏退出前调用 PoolSdkHelper.exitGame 通知 SDK 游戏要退出 (具体可参照 Demo 示例)
+    	2.9.1、方法定义
+    	    public static void showExitDialog(final PoolExitDialogListener exitDialogListener)
+    	2.9.2、参数说明
+    	2.9.3、代码示例
+    	    @Override
+	    public boolean dispatchKeyEvent(KeyEvent pKeyEvent) {
+		if (pKeyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK
+				&& pKeyEvent.getAction() == KeyEvent.ACTION_DOWN) {
+			if (PoolSdkHelper.hasExitDialog()) {
+				PoolSdkHelper.showExitDialog(new PoolExitDialogListener() {
+					@Override
+					public void onDialogResult(int code, String msg) {
+						// TODO Auto-generated method stub
+						switch (code) {
+						case PoolSDKCode.EXIT_SUCCESS:// 退出成功游戏处理自己退出逻辑
+							finish();
+							// System.exit(0);
+							break;
+						case PoolSDKCode.EXIT_CANCEL:// 取消退出
+							break;
+						default:
+							break;
+						}
+					}
+				});
+			} else {
+				// TODO: 调用游戏的退出界面
+				showGameExitTips();
+			}
+			return false;
+		}
+		return super.dispatchKeyEvent(pKeyEvent);
+	    }
+    2.10、Android 生命周期接口(必接)
+    	说明:在游戏 Activity 的 onStart、onPause、onResume、 onStop、onDestroy、onRestart、onNewIntent、 onActivityResult、onConfigurationChanged 中分别调用对应的接口
+    	2.10.1、代码示例
+    	    @Override
+	    public void onStart() {
+		super.onStart();
+		PoolSdkHelper.onStart();
+	    }
+
+	    @Override
+	    public void onStop() {
+		super.onStop();
+		PoolSdkHelper.onStop();
+	    }
+
+	    @Override
+	    public void onDestroy() {
+		super.onDestroy();
+		PoolSdkHelper.onDestroy();
+	    }
+
+	    @Override
+	    public void onResume() {
+		super.onResume();
+		PoolSdkHelper.onResume();
+	    }
+
+	    @Override
+	    public void onPause() {
+		super.onPause();
+		PoolSdkHelper.onPause();
+	    }
+
+	    @Override
+	    public void onRestart() {
+		super.onRestart();
+		PoolSdkHelper.onRestart();
+	    }
+
+	    @Override
+	    public void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		PoolSdkHelper.onNewIntent(intent);
+	    }
+
+	    @Override
+	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		PoolSdkHelper.onActivityResult(requestCode, resultCode, data);
+	    }
+
+	    @Override
+	    public void onConfigurationChanged(Configuration newConfig) {
+		// TODO Auto-generated method stub
+		super.onConfigurationChanged(newConfig);
+		PoolSdkHelper.onConfigurationChanged(newConfig);
+	    }
+    2.11、扩展接口(可选)
+    	说明:该接口为扩展的万能接口,留作备用,目前游戏方可以不接入
+    	2.11.1、方法定义
+    	public static void expansionInterface(final String paramCustom,final PoolExpansionListener poolExpansionListener)
+    	2.11.2、参数说明
+    	
+    2.12、获取渠道包标识(可选)
+        接口名称:PoolSdkHelper.getGameChannelId()
+	接口说明:获取在企业平台配置的渠道标识,返回类型为 String
+	接口名称:PoolSdkHelper. getChannelParameter1 ()
+	接口说明:获取在企业平台配置的渠道参数 1,返回类型为 String
+	接口名称:PoolSdkHelper. getChannelParameter2 ()
+	接口说明:获取在企业平台配置的渠道参数 2,返回类型为 String
+    2.13、获取渠道自定义参数(可选)
+    	接口名称:PoolSdkHelper.getCustomValue()
+	接口说明:获取在企业平台配置的渠道自定义参数,返回类型为 String
+    2.14、打开论坛接口(UC 平台专用)
+    	接口名称:PoolSkHelper.openForum() 
+    	接口说明:打开渠道的论坛界面
+    	
+#3、自测用例
+    3.1、进入游戏会弹出下面的登录界面,表示登录接口接入正常;
+    	![text1][../image/image2.png]
+    3.2、点击充值会弹出下面的界面,表示充值接口接入正常;
+	![text2][../image/image3.png]
+    3.3、点击渠道用户中心,弹出下面的界面表示该接口接入正常;
+    	![text3][../image/image4.png]
+#4、母包
+    4.1、接入公共 SDK 编译生成的 apk 即为打包工具使用的母包
