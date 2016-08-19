@@ -424,8 +424,8 @@ poolExpansionListener 	| 方法回调参数,实现onSuccess方法
     3.1、进入游戏会弹出下面的登录界面,表示登录接口接入正常;
 ![image](https://github.com/youaiPublic/publicAndroidSDK/blob/master/publicAndroidSDK/image/image5.png)
     3.2、点击充值会弹出下面的界面,表示充值接口接入正常;
-![image](../image/image3.png)
+![image](https://github.com/youaiPublic/publicAndroidSDK/blob/master/publicAndroidSDK/image/image6.png)
     3.3、点击渠道用户中心,弹出下面的界面表示该接口接入正常;
-![image](../image/image4.png)
+![image](../image/image7.png)
 #4、母包
     4.1、接入公共 SDK 编译生成的 apk 即为打包工具使用的母包
