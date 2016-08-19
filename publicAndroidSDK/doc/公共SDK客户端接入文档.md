@@ -100,8 +100,8 @@
         2.2.1、方法定义
             public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
-        <table>
-            <tr>
-                <td>Foo</td>
-            </tr>
-        </table>
+        | Tables        | Are           | Cool  |
+        | ------------- |:-------------:| -----:|
+        | col 3 is      | right-aligned | $1600 |
+        | col 2 is      | centered      |   $12 |
+        | zebra stripes | are neat      |    $1 |
