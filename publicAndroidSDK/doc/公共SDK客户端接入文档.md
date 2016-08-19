@@ -1,4 +1,4 @@
-<center>SDK 接入文档</center>
+#SDK 接入文档
 
 1、开发环境搭建
     以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置<br>
