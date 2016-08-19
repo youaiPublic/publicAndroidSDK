@@ -102,7 +102,6 @@
         2.2.2、参数说明
         <table>
             <tr>
-                <td>参数</td>
-                <td>说明</td>
+                <td>Foo</td>
             </tr>
         </table>
