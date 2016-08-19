@@ -83,4 +83,21 @@
     (注意:以下所有接口都必须在 SDK 初始化完成之后才能调用)<br>
     2.1、继承 PoolSDKApplication(必接) <br>
     说明:<br>
-    游戏工程如果没有 Application,请在 AndroidManifest.xml 中 添加 SDK 的 Application,如下图所示:<br>
+    游戏工程如果没有Application,请在 AndroidManifest.xml 中添加SDK的Application,如下所示:<br>
+    <application android:name="com.gzyouai.publicsdk.application.PoolSDKApplication"><br>
+    游戏工程如果有 Application,请继承 SDK 中 PoolSDKApplication:
+    public class XXXXApplication extends PoolSDKApplication { 
+        @Override
+        public void onCreate() {
+            // TODO Auto-generated method stub
+            super.onCreate();
+        } 
+    }
+    2.2、初始化接口(必接)
+        接口说明:
+        首先在程序开始的地方调用 SDK 的初始化 init 方法,并设 置 Activity 对像和初始化完成回调监听(在初始化失败情况下不 再调用其它 SDK 接口方法)
+        注意:要确保在 SDK 初始化成功后才可调用其它接口
+        2.2.1、方法定义
+            public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
+        2.2.2、参数说明
+        
