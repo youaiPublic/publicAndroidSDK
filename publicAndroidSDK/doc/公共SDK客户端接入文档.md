@@ -100,4 +100,3 @@
         2.2.1、方法定义
             public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
-        －－－
