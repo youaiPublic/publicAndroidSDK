@@ -100,4 +100,17 @@
         2.2.1、方法定义
             public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
-        
+        <table>
+            <tr>
+                <td>参数</td>
+                <td>说明</td>
+            </tr>
+            <tr>
+                <td>activity</td>
+                <td>Activity 上下文</td>
+            </tr>
+            <tr>
+                <td>callBackListener</td>
+                <td>初始化完成回调通知,需实现poolSdkCallBack方法</td>
+            </tr>
+        </table>
