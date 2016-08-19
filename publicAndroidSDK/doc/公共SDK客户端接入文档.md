@@ -105,12 +105,4 @@
                 <td>参数</td>
                 <td>说明</td>
             </tr>
-            <tr>
-                <td>activity</td>
-                <td>Activity 上下文</td>
-            </tr>
-            <tr>
-                <td>callBackListener</td>
-                <td>初始化完成回调通知,需实现poolSdkCallBack方法</td>
-            </tr>
         </table>
