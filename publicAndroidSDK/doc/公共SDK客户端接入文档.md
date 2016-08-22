@@ -6,8 +6,9 @@
 ![image](../image/image1.png)
     
     1.2、将1.1中复制的jar包引用到游戏工程
-    1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中poolsdk_splash目录下，将assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值
-    	回调地址（注：此回调地址为测试使用，正式环境以SDK后台配置的地址为准）
+    1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放
+    到assets中poolsdk_splash目录下，将assets中的poolsdk.xml中的payCallbackUrl参数配置为游
+    戏测试的充值回调地址（注：此回调地址为测试使用，正式环境以SDK后台配置的地址为准）
     1.4、修改游戏工程的AndroidManifest.xml（可以参照复制Demo中	AndroidManifest.xml文件）
         ①．添加声明权限：
         <uses-permission android:name="android.permission.INTERNET" />
@@ -85,7 +86,7 @@
     (注意:以下所有接口都必须在 SDK 初始化完成之后才能调用)
     2.1、继承 PoolSDKApplication(必接)
         说明:<br>
-        游戏工程如果没有Application,请在 AndroidManifest.xml 中添加SDK的Application,		如下所示:
+        游戏工程如果没有Application,请在 AndroidManifest.xml 中添加SDK的Application,如下所示:
         <application  android:name="com.gzyouai.publicsdk.application.PoolSDKApplication">
         游戏工程如果有 Application,请继承 SDK 中 PoolSDKApplication:
         public class XXXXApplication extends PoolSDKApplication { 
@@ -97,10 +98,11 @@
         }
     2.2、初始化接口(必接)
         接口说明:
-        首先在程序开始的地方调用 SDK 的初始化 init 方法,并设 置 Activity 对像和初始化完成回调监听(在初始化失败		情况下不 再调用其它 SDK 接口方法)
+        首先在程序开始的地方调用 SDK 的初始化 init 方法,并设 置 Activity 对像和初始化完成回调
+        监听(在初始化失败情况下不 再调用其它 SDK 接口方法)
         注意:要确保在 SDK 初始化成功后才可调用其它接口
         2.2.1、方法定义
-            public static void init(final Activity activity,final PoolSDKCallBackListener 			callBackListener) 
+            public static void init(final Activity activity,final PoolSDKCallBackListener callBackListener) 
         2.2.2、参数说明
 参数 |说明
 ------------ 		| ------------- 
@@ -264,7 +266,8 @@ custom 	| 自定义透传参数,通过回调函数原样返回
     		});
     		
     2.6、检测 SDK 是否含有用户中心接口(必接)
-        说明:如果接口返回为 true,表示需要游戏方在合适的界面中添加一个用户中心的按钮,点击按钮时调用文档        中 2.7 的用户中心接口;如果返回 false,则不做处理
+        说明:如果接口返回为 true,表示需要游戏方在合适的界面中添加一个用户中心的按钮,点击按钮时调用文
+        档中 2.7 的用户中心接口;如果返回 false,则不做处理
         2.6.1、方法定义
             public static boolean hasChannelCenter() 
     2.7、用户中心接口(必接)
@@ -302,7 +305,9 @@ poolLogoutListener 		| 账户注销成功回调监听,需实现 onLogoutSuccess 
 		}
 	    });	
     2.9、退出游戏接口(必接)
-    	说明:在游戏需要退出时调用,调用此接口时需先用 PoolSdkHelper.hasExitDialog() 判断 sdk 是否有退出界面,		为 true表示有退出界面需调用 showExitDialog()显示退出界面,为 false 时表示没有退出界面,游戏需自己处理退		出逻辑且在确认 游戏退出前调用 PoolSdkHelper.exitGame 通知 SDK 游戏要退出 (具体可参照 Demo 示例)
+    	说明:在游戏需要退出时调用,调用此接口时需先用 PoolSdkHelper.hasExitDialog() 判断 sdk 是否有退出界
+    	面,为 true表示有退出界面需调用 showExitDialog()显示退出界面,为 false 时表示没有退出界面,游戏需自己处
+    	理退出逻辑且在确认 游戏退出前调用 PoolSdkHelper.exitGame 通知 SDK 游戏要退出 (具体可参照 Demo 示例)
     	2.9.1、方法定义
     	    public static void showExitDialog(final PoolExitDialogListener exitDialogListener)
     	2.9.2、参数说明
@@ -342,7 +347,7 @@ exitDialogListener 		| 退出结果回调监听,需实现 onDialogResult 方法
 		return super.dispatchKeyEvent(pKeyEvent);
 	    }
     2.10、Android 生命周期接口(必接)
-    	说明:在游戏 Activity 的 onStart、onPause、onResume、 onStop、onDestroy、onRestart、		onNewIntent、 onActivityResult、onConfigurationChanged 中分别调用对应的接口
+    	说明:在游戏 Activity 的 onStart、onPause、onResume、 onStop、onDestroy、onRestart、onNewIntent、 onActivityResult、onConfigurationChanged 中分别调用对应的接口
     	2.10.1、代码示例
     	    @Override
 	    public void onStart() {
@@ -400,7 +405,7 @@ exitDialogListener 		| 退出结果回调监听,需实现 onDialogResult 方法
     2.11、扩展接口(可选)
     	说明:该接口为扩展的万能接口,留作备用,目前游戏方可以不接入
     	2.11.1、方法定义
-    		public static void expansionInterface(final String paramCustom,final 			PoolExpansionListener poolExpansionListener)
+    		public static void expansionInterface(final String paramCustom,final PoolExpansionListener poolExpansionListener)
     	2.11.2、参数说明
  参数 |说明
 ------------ 			| ------------- 
