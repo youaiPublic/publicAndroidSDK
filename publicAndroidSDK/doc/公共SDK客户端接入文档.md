@@ -2,12 +2,12 @@
 
 ###1、开发环境搭建
     以下是以 Eclipse 为例,在 Eclipse 环境下开发的 SDK 配置
-    1.1. 将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的libs 目录下
+    1.1、将 SDK 压缩包中 Jar 目录下的所有 jar 包复制到游戏工程的libs 目录下
 ![image](https://github.com/youaiPublic/publicAndroidSDK/blob/master/publicAndroidSDK/image/image1.png)
-    1.2. 将1.1中复制的jar包引用到游戏工程
-    1.3. 复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中		poolsdk_splash目录下，将	assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值
+    1.2、将1.1中复制的jar包引用到游戏工程
+    1.3、复制SDK压缩包中assets目录下的所有内容到游戏工程的assets目录，将游戏中的闪屏图片放到assets中		poolsdk_splash目录下，将	assets中的poolsdk.xml中的payCallbackUrl参数配置为游戏测试的充值
     	回调地址（注：此回调地址为测试使用，正式环境以SDK后台配置的地址为准）
-    1.4. 修改游戏工程的AndroidManifest.xml（可以参照复制Demo中	AndroidManifest.xml文件）
+    1.4、修改游戏工程的AndroidManifest.xml（可以参照复制Demo中	AndroidManifest.xml文件）
         ①．添加声明权限：
         <uses-permission android:name="android.permission.INTERNET" />
         <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -203,7 +203,7 @@ custom 				| 创建角色时间(以秒为单位)
 	2.5、支付接口(必接)
 	    2.5.1、方法定义
 	        public static void pay(final PoolPayInfo poolPayInfo,final PoolPayListener poolPayListener)
-	   2.5.2、参数说明
+	    2.5.2、参数说明
 参数 |说明
 ------------ 		| ------------- 
 poolRoleInfo 		| 角色数据实体类
