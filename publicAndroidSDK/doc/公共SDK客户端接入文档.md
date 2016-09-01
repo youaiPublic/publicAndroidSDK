@@ -278,8 +278,8 @@ custom 	| 自定义透传参数,通过回调函数原样返回
     	/**
 	 * 用户中心
 	 * 
-	 * 游戏方先调用YASDKHelper.hasChannelCenter()获取是否有用户中心，
-	 * 如果有的话，游戏中需要添加按钮，点击按钮调用YASDKHelper.openChannelCenter();
+	 * 游戏方先调用PoolSdkHelper.hasChannelCenter()获取是否有用户中心，
+	 * 如果有的话，游戏中需要添加按钮，点击按钮调用PoolSdkHelper.openChannelCenter();
 	 * 如果没有，则不需要显示按钮，也不用调用下面的接口
 	 */
 	private void channelCenter() {
