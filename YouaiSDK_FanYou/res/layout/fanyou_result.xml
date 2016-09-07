@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".ResultActivity"
+    android:background="#FFFFFF" >
+
+    <TextView
+        android:id="@+id/result_title"
+        style="@style/fanyou_txt_main"
+        android:text="账号XXXX已绑定角色成功，请您牢记您的账号和密码。" />
+
+    <TextView
+        android:id="@+id/result_bt"
+        style="@style/fanyou_txt_button"
+        android:layout_below="@+id/result_title"
+        android:layout_centerHorizontal="true"
+        android:text="进入游戏" />
+
+</RelativeLayout>

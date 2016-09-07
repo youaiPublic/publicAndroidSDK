@@ -1,0 +1,104 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context=".BindActivity"
+    android:background="#FFFFFF" >
+
+    
+    <ScrollView
+         android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+        <RelativeLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/textView1"
+		style="@style/fanyou_txt_title"
+        android:text="账号绑定" />
+    
+    <View 
+        android:id="@+id/view1"
+        style="@style/fanyou_view_divider"
+        android:layout_below="@+id/textView1"/>
+
+
+    
+    <TextView
+        android:id="@+id/textView2"
+        style="@style/fanyou_txt_main"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/view1"
+        android:text="请为您选择的角色绑定一个账号\n（以后即使用该帐密登陆该角色，可填写之前的帐密）\n\n请输入绑定账号密码：" />
+
+    
+    <TextView
+        android:id="@+id/textView3"
+        style="@style/fanyou_txt_main"
+        android:padding="10dp"
+        android:layout_below="@+id/textView2"
+        android:text="账号：" />
+
+    <TextView
+        android:id="@+id/textView4"
+        style="@style/fanyou_txt_main"
+        android:padding="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/textView3"
+        android:text="密码：" />
+
+
+    <EditText
+        android:id="@+id/ed_id"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toRightOf="@+id/textView3"
+        android:inputType="textPersonName"
+        android:background="#EBEBEB"
+        android:layout_marginRight="10dp" />
+
+    
+    <EditText
+        android:id="@+id/ed_key"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignBaseline="@+id/textView4"
+        android:layout_alignBottom="@+id/textView4"
+        android:layout_toRightOf="@+id/textView4"
+        android:inputType="textPassword"
+        android:background="#EBEBEB"
+        android:layout_marginRight="10dp"  >
+
+    </EditText>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp" >
+
+        <TextView
+            android:id="@+id/account_back"
+            style="@style/fanyou_txt_button"
+            android:text="返回" />
+        <TextView
+            android:id="@+id/account_ensure"
+            style="@style/fanyou_txt_button"
+            android:text="确定" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone" />
+    </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".EnterActivity"
+    android:background="#FFFFFF" >
+
+    <TextView
+        android:id="@+id/textView1"
+        style="@style/fanyou_txt_title"
+        android:text="绑定账号" />
+
+    <View style="@style/fanyou_view_divider" />
+
+            <TextView
+                android:id="@+id/textView2"
+                style="@style/fanyou_txt_main"
+                android:text="请点击选择您的游戏角色绑定账号\n（未绑定账号的游戏角色将无法登陆，请您尽快绑定）" />
+
+            <ListView
+                android:id="@+id/enter_role_listview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:divider="#AAAAAA"
+                android:dividerHeight="1px" >
+            </ListView>
+
+</LinearLayout>
