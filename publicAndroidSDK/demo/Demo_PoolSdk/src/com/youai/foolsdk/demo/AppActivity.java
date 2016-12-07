@@ -8,8 +8,8 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.WindowManager.LayoutParams;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.gzyouai.fengniao.sdk.framework.PoolExitDialogListener;
 import com.gzyouai.fengniao.sdk.framework.PoolExitListener;
@@ -35,7 +35,8 @@ public class AppActivity extends Activity {
 	private Button yaSubmitRoleDataBt;
 	private Button yaChannelCenter;
 	private Button yaSwitchAccountBt;
-	private Button forumBt;
+	private Button yaLogoutBt;
+	private Button yaForumBt;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +45,15 @@ public class AppActivity extends Activity {
 				"public_sdk_self_game_login", "layout", getPackageName());
 		setContentView(layoutId);
 		initLoginView();
-		PoolSdkLog.setIsShowLog(true);//显示PoolSDK log
-		
+		//PoolSdkHelper.isDebug = true;
+		PoolSdkLog.setIsShowLog(true);
 		PoolSdkHelper.init(this, new PoolSDKCallBackListener() {
 			@Override
 			public void poolSdkCallBack(int code, String msg) {
 				// TODO Auto-generated method stub
+				PoolSdkLog.logInfo("callback: code:" + code + "msg:" + msg);
 				switch (code) {
-				case PoolSDKCode.POOLSDK_INIT_SUCCESS://初始化成功
+				case PoolSDKCode.POOLSDK_INIT_SUCCESS:// 初始化成功
 					PoolSdkLog.logInfo("游戏中POOLSDK_INIT_SUCCESS");
 					login();
 					break;
@@ -61,9 +63,8 @@ public class AppActivity extends Activity {
 					break;
 				}
 			}
-		});
-		
-		//注销账号监听（在SDK账号注销时回调通知，游戏可在此处理切换账号逻辑）
+		});// init(this);// this为游戏的activity对象
+
 		PoolSdkHelper.setLogoutCallback(new PoolLogoutListener() {
 			@Override
 			public void onLogoutSuccess() {
@@ -72,7 +73,7 @@ public class AppActivity extends Activity {
 				PoolSdkLog.logInfo("游戏中logoutSuccess");
 			}
 		});
-		
+
 	}
 
 	@Override
@@ -80,52 +81,89 @@ public class AppActivity extends Activity {
 		super.onStart();
 		PoolSdkHelper.onStart();
 	}
+
 	@Override
 	public void onStop() {
 		super.onStop();
 		PoolSdkHelper.onStop();
 	}
-	@Override
-	public void onResume() {
-		super.onResume();
-		PoolSdkHelper.onResume();
-	}
-	@Override
-	public void onPause() {
-		super.onPause();
-		PoolSdkHelper.onPause();
-	}
-	@Override
-	public void onRestart() {
-		super.onRestart();
-		PoolSdkHelper.onRestart();
-	}
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		PoolSdkHelper.onDestroy();
 	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		PoolSdkHelper.onResume();
+	}
+
+	@Override
+	public void onPause() {
+		super.onPause();
+		PoolSdkHelper.onPause();
+
+	}
+
+	@Override
+	public void onRestart() {
+		super.onRestart();
+		PoolSdkHelper.onRestart();
+	}
+
 	@Override
 	public void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		PoolSdkHelper.onNewIntent(intent);
 	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		PoolSdkHelper.onActivityResult(requestCode, resultCode, data);
 	}
+
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		// TODO Auto-generated method stub
 		super.onConfigurationChanged(newConfig);
 		PoolSdkHelper.onConfigurationChanged(newConfig);
 	}
-
+	
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		// TODO Auto-generated method stub
+		super.onSaveInstanceState(outState);
+		PoolSdkHelper.onSaveInstanceState(outState);
+	}
+	
+	@Override
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		super.onRestoreInstanceState(savedInstanceState);
+		PoolSdkHelper.onRestoreInstanceState(savedInstanceState);
+	}
+	
+	@Override
+	public void onWindowFocusChanged(boolean hasFocus) {
+		// TODO Auto-generated method stub
+		super.onWindowFocusChanged(hasFocus);
+		PoolSdkHelper.onWindowFocusChanged(hasFocus);
+	}
+	
+	@Override
+	public void onWindowAttributesChanged(LayoutParams params) {
+		// TODO Auto-generated method stub
+		super.onWindowAttributesChanged(params);
+		PoolSdkHelper.onWindowAttributesChanged(params);
+	}
+	
 	@Override
 	public boolean dispatchKeyEvent(KeyEvent pKeyEvent) {
 		if (pKeyEvent.getKeyCode() == KeyEvent.KEYCODE_BACK
 				&& pKeyEvent.getAction() == KeyEvent.ACTION_DOWN) {
-			if (PoolSdkHelper.hasExitDialog()) {//判断SDK是否含有退出框
+			if (PoolSdkHelper.hasExitDialog()) {
 				PoolSdkHelper.showExitDialog(new PoolExitDialogListener() {
 					@Override
 					public void onDialogResult(int code, String msg) {
@@ -134,7 +172,7 @@ public class AppActivity extends Activity {
 						case PoolSDKCode.EXIT_SUCCESS:// 退出成功游戏处理自己退出逻辑
 							finish();
 							break;
-						case PoolSDKCode.EXIT_CANCEL://取消退出
+						case PoolSDKCode.EXIT_CANCEL:// 取消退出
 							break;
 						default:
 							break;
@@ -203,10 +241,11 @@ public class AppActivity extends Activity {
 		yaSwitchAccountBt = (Button) findViewById(getRedIdByName(
 				"ya_switch_account_bt", "id"));
 		yaSwitchAccountBt.setText("切换账号");
-		
-		forumBt = (Button)findViewById(getRedIdByName("forum_bt", "id"));
-		forumBt.setText("打开论坛");
 		PoolSdkLog.logError("" + yaPayBt + "yachannel:" + yaChannelCenter);
+		
+		yaLogoutBt = (Button) findViewById(getRedIdByName("logout_bt", "id"));
+		
+		yaForumBt = (Button) findViewById(getRedIdByName("forum_bt", "id"));
 	}
 
 	public void yaOnClick(View view) {
@@ -215,7 +254,7 @@ public class AppActivity extends Activity {
 		} else if (view == yaEnterGameBt) {
 			setContentView(getRedIdByName("public_sdk_self_game", "layout"));// (R.layout.game);
 			initGameView();
-			PoolReport.reportEnterGame("chufan", 11, "201");
+			PoolReport.reportEnterGame("chufan","角色名", 12, "201","服务器名");
 		} else if (view == yaPayBt) {
 			pay();
 		} else if (view == yaSubmitRoleDataBt) {
@@ -224,18 +263,24 @@ public class AppActivity extends Activity {
 			channelCenter();
 		} else if (view == yaSwitchAccountBt) {
 			switchAccount();
-		}else if(view == forumBt){
+		} else if (view == yaLogoutBt){
+			logout();
+		} else if (view == yaForumBt){
 			openForum();
 		}
 	}
 
 	private void openForum(){
-		Toast.makeText(this, "打开论坛", Toast.LENGTH_SHORT).show();
 		PoolSdkHelper.openForum();
 	}
 	
+	private void logout(){
+		PoolSdkHelper.logout(this);//结果回调通知到PoolLogoutListener
+		if(PoolSdkHelper.hasLogout()){
+		}
+	}
+	
 	private void login() {
-		
 		PoolSdkHelper.login("登录自定义字段", new PoolLoginListener() {
 			@Override
 			public void onLoginSuccess(PoolLoginInfo poolLoginInfo) {
@@ -244,6 +289,7 @@ public class AppActivity extends Activity {
 				String serverSign = poolLoginInfo.getServerSign();
 				String openId = poolLoginInfo.getOpenID();
 				// TODO: 把以上信息发送给游戏服务端做登录校验，需要其他信息请从poolLoginInfo对象中获取
+
 				System.out.println("登录成功  userType = " + userType
 						+ "; timestamp = " + timestamp + "; serverSign = "
 						+ serverSign + "; openId = " + openId);
@@ -255,11 +301,9 @@ public class AppActivity extends Activity {
 			}
 		});
 	}
-	/**
-	 * 充值接口
-	 */
+
 	private void pay() {
-		PoolPayInfo poolPayInfo = new PoolPayInfo();
+		final PoolPayInfo poolPayInfo = new PoolPayInfo();
 
 		/********************************************
 		 * 以下所有字段都是必填项
@@ -287,6 +331,7 @@ public class AppActivity extends Activity {
 		// 自定义参数
 		poolPayInfo.setCustom("我是自定义参数");
 
+		// TODO Auto-generated method stub
 		PoolSdkHelper.pay(poolPayInfo, new PoolPayListener() {
 
 			@Override
@@ -300,6 +345,7 @@ public class AppActivity extends Activity {
 						+ errorMsg);
 			}
 		});
+
 	}
 
 	/**
@@ -318,8 +364,16 @@ public class AppActivity extends Activity {
 		poolRoleInfo.setRoleName("我是角色名");
 		poolRoleInfo.setServerID("1");
 		poolRoleInfo.setServerName("我是服务器名");
-		poolRoleInfo.setCustom(System.currentTimeMillis()/1000+"");//游戏创建角色时间 以秒为单位
-		poolRoleInfo.setCallType(PoolRoleInfo.Type_EnterGame);//1、登录游戏主场景 2、创建角色 3、角色升级
+		poolRoleInfo.setCustom("角色创建时间");
+		poolRoleInfo.setRoleCTime(System.currentTimeMillis()/1000);//角色创建时间（秒）
+		poolRoleInfo.setPartyName("公会名称");
+		poolRoleInfo.setRoleType("狂战");//角色类型
+		poolRoleInfo.setRoleChangeTime(System.currentTimeMillis()/1000);//角色更新时间
+		poolRoleInfo.setVipLevel("10");//vip等级
+		poolRoleInfo.setDiamond("1000");//余额
+		poolRoleInfo.setMoneyType("金币");//商品单位
+		
+		poolRoleInfo.setCallType(PoolRoleInfo.Type_EnterGame);
 		// poolRoleInfo.setCallType(PoolRoleInfo.Type_CreateRole);
 		// poolRoleInfo.setCallType(PoolRoleInfo.Type_RoleUpgrade);
 
@@ -334,8 +388,8 @@ public class AppActivity extends Activity {
 	/**
 	 * 用户中心
 	 * 
-	 * 游戏方先调用PoolSDKHelper.hasChannelCenter()获取是否有用户中心，
-	 * 如果有的话，游戏中需要添加按钮，点击按钮调用PoolSDKHelper.openChannelCenter();
+	 * 游戏方先调用YASDKHelper.hasChannelCenter()获取是否有用户中心，
+	 * 如果有的话，游戏中需要添加按钮，点击按钮调用YASDKHelper.openChannelCenter();
 	 * 如果没有，则不需要显示按钮，也不用调用下面的接口
 	 */
 	private void channelCenter() {
@@ -343,16 +397,11 @@ public class AppActivity extends Activity {
 	}
 
 	/**
-	 * 切换帐号(使用用户中心中的切换账号)
+	 * 切换帐号
 	 */
 	private void switchAccount() {
-		boolean hasChannelCenter = PoolSdkHelper.hasChannelCenter();
-		if(hasChannelCenter){
-			PoolSdkHelper.openChannelCenter();//打开用户中心
-		}else{//如果没有用户中心 游戏自己处理切换账号逻辑 
-			setContentView(getRedIdByName("public_sdk_self_game_login",
-					"layout"));// (R.layout.game_login);
-			initLoginView();
+		if(PoolSdkHelper.hasSwitchAccount()){
+			PoolSdkHelper.switchAccount(this);
 		}
 	}
 
@@ -361,6 +410,7 @@ public class AppActivity extends Activity {
 	 */
 	private void expansionInterface() {
 		PoolSdkHelper.expansionInterface("自定义参数", new PoolExpansionListener() {
+
 			@Override
 			public void onSuccess(String paramCustom) {
 
