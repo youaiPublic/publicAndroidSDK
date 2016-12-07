@@ -468,7 +468,7 @@ poolExpansionListener 	| 方法回调参数,实现onSuccess方法
     2.14、打开论坛接口(UC 平台专用)
     	接口名称:PoolSkHelper.openForum() 
     	接口说明:打开渠道的论坛界面
-    2.15、注销借口
+    2.15、注销接口
     	说明：该接口在游戏需要注销账号时调用，注销结果通知到PoolLogoutListener回调中，调用之前先判断是否包含此接口（hasLogout()）
     	2.15.1、方法定义
     	public static void logout(final Activity paramActivity) ;
