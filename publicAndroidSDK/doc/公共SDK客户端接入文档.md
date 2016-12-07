@@ -361,7 +361,7 @@ exitDialogListener 		| 退出结果回调监听,需实现 onDialogResult 方法
 		return super.dispatchKeyEvent(pKeyEvent);
 	    }
     2.10、Android 生命周期接口(必接)
-    	说明:在游戏 Activity 的 onStart、onPause、onResume、 onStop、onDestroy、onRestart、onNewIntent、 onActivityResult、onConfigurationChanged 中分别调用对应的接口
+    	说明:在游戏 Activity 的 onStart、onPause、onResume、 onStop、onDestroy、onRestart、onNewIntent、 onActivityResult、onConfigurationChanged、onSaveInstanceState、onRestoreInstanceState、onWindowFocusChanged、onWindowAttributesChanged 中分别调用对应的接口
     	2.10.1、代码示例
     	    @Override
 	    public void onStart() {
