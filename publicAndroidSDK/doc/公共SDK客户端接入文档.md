@@ -114,14 +114,13 @@ callBackListener 	| 初始化完成回调通知,需实现 poolSdkCallBack 方法
 			@Override
 			public void poolSdkCallBack(int code, String msg) {
 				// TODO Auto-generated method stub
+				PoolSdkLog.logInfo("callback: code:" + code + "msg:" + msg);
 				switch (code) {
-				case PoolSDKCode.POOLSDK_INIT_SUCCESS://初始化成功
+				case PoolSDKCode.POOLSDK_INIT_SUCCESS:// 初始化成功
 					PoolSdkLog.logInfo("游戏中POOLSDK_INIT_SUCCESS");
 					login();
 					break;
 				case PoolSDKCode.POOLSDK_INIT_FAIL:
-					break;
-				default:
 					break;
 				}
 			}
@@ -130,7 +129,7 @@ callBackListener 	| 初始化完成回调通知,需实现 poolSdkCallBack 方法
 	2.3、登录接口(必接)
 	    接口说明:游戏登录时调用
 	    2.3.1、方法定义
-	    public static void login(final String paramCustom,final PoolLoginListener poolLoginListener)
+	    public static void login(final String paramCustom,final 			PoolLoginListener poolLoginListener)
 	    2.3.2、参数说明
 参数 |说明
 ------------ 		| ------------- 
@@ -178,7 +177,14 @@ roleLevel 			| 角色等级
 roleSex 			| 角色性别(1 男 0 女,如果角 色不分性别请填写 0)
 serverId 			| 服务器 id
 serverName 			| 服务器名称
-custom 				| 创建角色时间(以秒为单位)
+custom 				| 自定义字段
+roleCTime 			| 角色创建时间(秒)
+partyName 			| 公会名称
+roleType 			| 角色类型
+roleChangeTime 		| 角色等级更新时间(以秒为单位)
+vipLevel 			| VIP等级
+diamond 			| 余额
+moneyType 			| 商品单位
 		
 		2.4.3、代码示例
 		/********************************************
@@ -192,6 +198,13 @@ custom 				| 创建角色时间(以秒为单位)
 		poolRoleInfo.setServerID("1");
 		poolRoleInfo.setServerName("我是服务器名");
 		poolRoleInfo.setCustom("角色创建时间");
+		poolRoleInfo.setRoleCTime(System.currentTimeMillis()/1000);//角色创建时（秒）
+		poolRoleInfo.setPartyName("公会名称");
+		poolRoleInfo.setRoleType("狂战");//角色类型
+		poolRoleInfo.setRoleChangeTime(System.currentTimeMillis()/1000);//角色更新时间
+		poolRoleInfo.setVipLevel("10");//vip等级
+		poolRoleInfo.setDiamond("1000");//余额
+		poolRoleInfo.setMoneyType("金币");//商品单位
 		poolRoleInfo.setCallType(PoolRoleInfo.Type_EnterGame);
 		// poolRoleInfo.setCallType(PoolRoleInfo.Type_CreateRole);
 		// poolRoleInfo.setCallType(PoolRoleInfo.Type_RoleUpgrade);
@@ -285,25 +298,26 @@ custom 	| 自定义透传参数,通过回调函数原样返回
 	private void channelCenter() {
 		PoolSdkHelper.openChannelCenter();
 	}
-
-    2.8、注销登录监听接口
-    	说明:可在游戏启动时设置注销监听事件,渠道注销成功后 SDK 会回调 onLogoutSuccess 方法通知游戏,游戏可在此处理切换账号逻辑
-    	2.8.1、方法定义
-    	public static void setLogoutCallback(final PoolLogoutListener poolLogoutListener)
-    	2.8.2、参数说明
- 参数 |说明
------------- 		| ------------- 
+	
+	2.8、注销登录监听接口
+    说明:可在游戏启动时设置注销监听事件,渠道注销成功后 SDK 会回调 onLogoutSuccess 方法通知游戏,游戏可在此处理切换账号逻辑
+    2.8.1、方法定义
+    public static void setLogoutCallback(final PoolLogoutListener poolLogoutListener)
+    2.8.2、参数说明
+参数 |说明
+------------ 			| ------------- 
 poolLogoutListener 		| 账户注销成功回调监听,需实现 onLogoutSuccess 方法
-    	
-    	2.8.3、代码示例
-    	    PoolSdkHelper.setLogoutCallback(new PoolLogoutListener() {
-		@Override
-		public void onLogoutSuccess() {
-		    // TODO: 此处处理SDK登出的逻辑
-		    login();
-		    PoolSdkLog.logInfo("游戏中logoutSuccess");
-		}
-	    });	
+    
+    2.8.3、代码示例
+        PoolSdkHelper.setLogoutCallback(new PoolLogoutListener() {
+    @Override
+    public void onLogoutSuccess() {
+        // TODO: 此处处理SDK登出的逻辑
+        login();
+        PoolSdkLog.logInfo("游戏中logoutSuccess");
+    }
+    }); 
+
     2.9、退出游戏接口(必接)
     	说明:在游戏需要退出时调用,调用此接口时需先用 PoolSdkHelper.hasExitDialog() 判断 sdk 是否有退出界
     	面,为 true表示有退出界面需调用 showExitDialog()显示退出界面,为 false 时表示没有退出界面,游戏需自己处
@@ -392,16 +406,45 @@ exitDialogListener 		| 退出结果回调监听,需实现 onDialogResult 方法
 	    }
 
 	    @Override
-	    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		PoolSdkHelper.onActivityResult(requestCode, resultCode, data);
+	    protected void onActivityResult(int requestCode, int resultCode, Intent 			data) {
+			PoolSdkHelper.onActivityResult(requestCode, resultCode, data);
 	    }
 
 	    @Override
 	    public void onConfigurationChanged(Configuration newConfig) {
-		// TODO Auto-generated method stub
-		super.onConfigurationChanged(newConfig);
-		PoolSdkHelper.onConfigurationChanged(newConfig);
+			// TODO Auto-generated method stub
+			super.onConfigurationChanged(newConfig);
+			PoolSdkHelper.onConfigurationChanged(newConfig);
 	    }
+	    
+	    @Override
+		protected void onSaveInstanceState(Bundle outState) {
+			// TODO Auto-generated method stub
+			super.onSaveInstanceState(outState);
+			PoolSdkHelper.onSaveInstanceState(outState);
+		}
+	
+		@Override
+		protected void onRestoreInstanceState(Bundle 			savedInstanceState) {
+			// TODO Auto-generated method stub
+			super.onRestoreInstanceState(savedInstanceState);
+			PoolSdkHelper.onRestoreInstanceState(savedInstanceState);
+		}
+	
+		@Override
+		public void onWindowFocusChanged(boolean hasFocus) {
+			// TODO Auto-generated method stub
+			super.onWindowFocusChanged(hasFocus);
+			PoolSdkHelper.onWindowFocusChanged(hasFocus);
+		}
+	
+		@Override
+		public void onWindowAttributesChanged(LayoutParams params) {
+			// TODO Auto-generated method stub
+			super.onWindowAttributesChanged(params);
+			PoolSdkHelper.onWindowAttributesChanged(params);
+		}
+	    
     2.11、扩展接口(可选)
     	说明:该接口为扩展的万能接口,留作备用,目前游戏方可以不接入
     	2.11.1、方法定义
@@ -425,7 +468,40 @@ poolExpansionListener 	| 方法回调参数,实现onSuccess方法
     2.14、打开论坛接口(UC 平台专用)
     	接口名称:PoolSkHelper.openForum() 
     	接口说明:打开渠道的论坛界面
-    	
+    2.15、注销借口
+    	说明：该接口在游戏需要注销账号时调用，注销结果通知到PoolLogoutListener回调中，调用之前先判断是否包含此接口（hasLogout()）
+    	2.15.1、方法定义
+    	public static void logout(final Activity paramActivity) ;
+    	2.15.2、参数说明
+参数 |说明
+------------ 			| ------------- 
+paramActivity 			| 上下文
+		
+		2.15.3、代码示例
+		private void logout(){
+			if(PoolSdkHelper.hasLogout()){
+				PoolSdkHelper.logout(this);
+			}
+		}
+	2.16、切换账号接口
+		说明：该接口在游戏切换账号时调用，切换成功回通知到登录监听回调中，调用前请判断是否含有此接口（hasSwitchAccount）
+		2.16.1、方法定义
+		public static void switchAccount(final Activity paramActivity)；
+		2.16.2、参数说明
+参数 |说明
+------------ 			| ------------- 
+paramActivity 			| 上下文
+
+		2.16.3、代码示例
+		/**
+	 	* 切换帐号
+	 	*/
+		private void switchAccount() {
+			if(PoolSdkHelper.hasSwitchAccount()){
+				PoolSdkHelper.switchAccount(this);
+			}
+		}
+
 #3、自测用例
     3.1、进入游戏会弹出下面的登录界面,表示登录接口接入正常;
 ![image](../image/image5.png)
