@@ -1,3 +1,5 @@
+##此地址不在更新最新文档地址：<http://gitlab.9133.com:10080/public_service/public_sdk_android/tree/master>
+
 # 更新说明
 2016-07-26:  
 1、公共SDK安卓版本提交
