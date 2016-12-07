@@ -16,6 +16,8 @@
         sdkversioncode="BVPAQexcXDk="
         styleName="yvfh/4zhaEQ="
         usertype="gssaXIIEiL0="
-        weixinId="tEsCXmDVJ63j/UyDe3wVrNojH2NJXj59" />
+        weixinId="tEsCXmDVJ63j/UyDe3wVrNojH2NJXj59" 
+        payCallbackUrl = "http://51wang"       
+        />
 
 </config>
